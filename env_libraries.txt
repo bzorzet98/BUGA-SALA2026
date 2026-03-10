@@ -1,0 +1,7 @@
+RUn this code in command line
+
+conda create -n hackathon_sala python=3.10 -y
+
+conda activate hackathon_sala# Instalar las librerías necesarias
+
+conda install -c conda-forge boto3 tqdm python-dotenv pandas matplotlib jupyter ipykernel -y
