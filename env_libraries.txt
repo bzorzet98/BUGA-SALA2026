@@ -1,7 +1,7 @@
-RUn this code in command line
 
-conda create -n hackathon_sala python=3.10 -y
+conda create --name sala_hackathon python=3.11.9 -y
+conda activate sala_hackathon
 
-conda activate hackathon_sala# Instalar las librerías necesarias
-
-conda install -c conda-forge boto3 tqdm python-dotenv pandas matplotlib jupyter ipykernel -y
+# Install PyTorch and core data science tools together
+conda install pytorch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 pytorch-cuda=11.8 pandas scikit-learn numpy pillow -c pytorch -c nvidia -c conda-forge
+pip install opencv-python tqdm matplotlib
