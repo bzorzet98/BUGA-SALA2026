@@ -1,49 +1,39 @@
-################################### IMPORT THE LIBRARIES ####################################
-import torch
-import torch.nn as nn
-import torchvision.models as models
-import torchvision.transforms as transforms
-from PIL import Image, ImageOps
-import numpy as np
 import json
-import osx
+import os
+import argparse
 import matplotlib.pyplot as plt
 from src.utils import configure_path_to_save
+from global_config import main_root
 
 ################################ CONFIGURATION OF SCRIPTS #########################
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--script_config', type=str, default='AuditNN_MI-BCI_EEGNetv4_Eval4F_alpha-LH-RH')
-
-# args = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument('--script_config', type=str, default='ResNet18_TrainingConfig_v0')
+args = parser.parse_args()
 
 ############################### EXTRACT THE CONFIGURATIONS ########################
+script_config = args.script_config
 
-# Configuración del dispositivo (GPU si está disponible)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+evaluation_label = script_config['general_parameters']["label"]
+database_path =  Path(main_root) / Path(*script_config['general_parameters']["database_path"])
+results_path = Path(main_root) / Path(*script_config['general_parameters']["path_to_save_results"])
 
-############################### CONFIGURE THE PATH TO SAVE ########################
-path_to_save_results = configure_path_to_save()
+############################### INITIALIZE THE TRAINING DATASET ####################
+dataset_config = script_config["training_dataset"]
+training_dataset = import_class(dataset_config['class_name'], 
+                                dataset_config['module_name'])(**dataset_config['params'])
+training_dataset.load_data(database_path)
 
+############################## INITIALIZE THE MODEL TO FIT ##########################
+model_config = script_config["model"]
+model =  import_class(model_config['class_name'], 
+                                model_config['module_name'])(**model_config['params'])
 
-############################## CONFIGURE THE DATASET ######################## 
-resnet_transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize(
-        mean=[0.485, 0.456, 0.406], 
-        std=[0.229, 0.224, 0.225]
-    )
-])
-
-ds = FishDataset(root_dir=os.path.join(root_path,"Dataset" ), transform=minimal_transform)
-
-
-
+############################# FIT THE MODEL #########################################
+model.fit_model(traning_dataset)
 
 
-
-
-
-
+############################ SAVE MODELS PARAMETERS #################################
+model.save_model_parameters()
 
 def save_fish_crops(crops_tensor, metadata, output_folder="output_samples"):
     """
@@ -83,9 +73,7 @@ def save_fish_crops(crops_tensor, metadata, output_folder="output_samples"):
     print(f"Se han guardado {n_peces} recortes en '{output_folder}'.")
     
 
-minimal_transform = transforms.Compose([
-    transforms.ToTensor()
-])
+
 
 root_path = os.getcwd()
 # Try the new class
@@ -108,15 +96,6 @@ root_path = os.getcwd()
 
 
 
-def get_feature_extractor():
-    # Usamos ResNet18 (512 dims) o ResNet50 (2048 dims)
-    model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
-    model.fc = nn.Identity() 
-    model.to(device)
-    model.eval()
-    return model
-
-model = get_feature_extractor()
 
 # 2. Función de Inferencia Individual por Archivo
 def run_inference_per_file(dataset, model, output_dir="Results"):
