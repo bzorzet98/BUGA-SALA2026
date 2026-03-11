@@ -2,38 +2,66 @@ import json
 import os
 import argparse
 import matplotlib.pyplot as plt
-from src.utils import configure_path_to_save
-from global_config import main_root
+import sys
+from torch.utils.data import random_split, DataLoader
+from tqdm import tqdm
+import torch
+from pathlib import Path
+root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+main_root = os.getcwd()
+if root_path not in sys.path:
+    sys.path.append(root_path)
+    sys.path.append(main_root)
+from src.utils import load_json_file, import_class
+
 
 ################################ CONFIGURATION OF SCRIPTS #########################
 parser = argparse.ArgumentParser()
 parser.add_argument('--script_config', type=str, default='ResNet18_TrainingConfig_v0')
 args = parser.parse_args()
+# Read the json 
 
 ############################### EXTRACT THE CONFIGURATIONS ########################
 script_config = args.script_config
-
+script_config = load_json_file(Path(root_path, "fit_model_embeddings", "configs", f"{script_config}.json" ))
 evaluation_label = script_config['general_parameters']["label"]
 database_path =  Path(main_root) / Path(*script_config['general_parameters']["database_path"])
 results_path = Path(main_root) / Path(*script_config['general_parameters']["path_to_save_results"])
-
+os.makedirs(results_path,exist_ok=True)
 ############################### INITIALIZE THE TRAINING DATASET ####################
-dataset_config = script_config["training_dataset"]
-training_dataset = import_class(dataset_config['class_name'], 
+dataset_config = script_config["dataset"]
+full_dataset = import_class(dataset_config['class_name'], 
                                 dataset_config['module_name'])(**dataset_config['params'])
-training_dataset.load_data(database_path)
+full_dataset.load_data(database_path, sub_folder = None)
 
 ############################## INITIALIZE THE MODEL TO FIT ##########################
 model_config = script_config["model"]
 model =  import_class(model_config['class_name'], 
                                 model_config['module_name'])(**model_config['params'])
 
-############################# FIT THE MODEL #########################################
-model.fit_model(traning_dataset)
+############################# SPLIT THE DATA ########################################
+splitter_data = script_config["splitter_data"]
+train_size = int(splitter_data['ptrain'] * len(full_dataset))
+val_size = len(full_dataset) - train_size
+gen = torch.Generator().manual_seed(splitter_data['seed'])
+train_dataset, val_dataset = random_split(full_dataset, [train_size, val_size], 
+                                            generator=gen) 
 
+X_train = []
+for i in range(train_size):
+    segmented_objects, metadata = train_dataset[i]
+    X_embedding = model.evaluate_embeddings(segmented_objects)
+    X_train.append(segmented_objects)
+X_train = torch.cat(X_train, dim=0)
+
+############################# FIT THE MODEL #########################################
+X_pca = model._fit_PCA_pipeline(X_train)
 
 ############################ SAVE MODELS PARAMETERS #################################
-model.save_model_parameters()
+model.save_models_parameters(path = results_path)
+
+
+
 
 def save_fish_crops(crops_tensor, metadata, output_folder="output_samples"):
     """
@@ -72,18 +100,6 @@ def save_fish_crops(crops_tensor, metadata, output_folder="output_samples"):
     
     print(f"Se han guardado {n_peces} recortes en '{output_folder}'.")
     
-
-
-
-root_path = os.getcwd()
-# Try the new class
-crops_tensor, meta = ds[0] 
-
-print(f"Video: {meta[0]['video']} - Frame: {meta[0]['frame']}")
-print(f"Peces encontrados: {len(crops_tensor)}")
-
-# 2. Visualizamos los primeros 5 peces encontrados en ese frame
-save_fish_crops(crops_tensor, meta)
 
 # --- EJEMPLO DE USO ---
 # 1. Obtenemos los datos de un frame

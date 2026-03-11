@@ -1,1 +1,0 @@
-from .fishes_embedding_extractor import *

@@ -1,0 +1,9 @@
+{
+    "resnet_type": "ResNet18",
+    "pca_kwargs": {
+        "n_components": 50,
+        "whiten": true,
+        "svd_solver": "auto"
+    },
+    "n_components": 50
+}

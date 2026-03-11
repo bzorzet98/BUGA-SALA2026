@@ -5,14 +5,20 @@
         "path_to_save_results": ["02_fish_object_feature_extractor","results", 
                                 "fit_model_embeddings", "ResNet18_TrainingConfig_v0"]
     },
-    "training_dataset": {
+    "dataset": {
         "class_name": "FishDataset",
         "module_name": "src.datasets",
-        "params": { }
+        "params": { "root_dir": null, 
+                    "transform":null, 
+                    "sub_folder":null}
+    },
+    "splitter_data":{
+        "seed":8,
+        "ptrain":0.8
     },
     "model":{
         "class_name": "ResNetFishEmbeddings",
-        "module_name": "src.network",
+        "module_name": "src.models",
         "params": {
             "resnet_type":"ResNet18", 
             "pca_kwargs":{
