@@ -1,0 +1,25 @@
+{
+    "inference": {
+        "model_path": "/home/jpbarrientos/code/BUGA-SALA2026/runs/runs/fish_yolo26l_finetune5/weights/best.pt",
+        "source_dir": "/home/jpbarrientos/code/BUGA-SALA2026/Datasets/fishes_bb_by_sam2/final_dataset/images/test",
+        "labels_dir": "/home/jpbarrientos/code/BUGA-SALA2026/Datasets/fishes_bb_by_sam2/final_dataset/labels/test",
+        "output_dir": "/home/jpbarrientos/code/BUGA-SALA2026/02_YOLO_retraining/predictions/yolo26l_finetune5",
+        "imgsz": 960,
+        "conf": 0.50,
+        "device": 0
+    },
+
+    "dataset": {
+    "image_extensions": [".jpg", ".jpeg", ".png", ".bmp", ".webp"],
+    "random_seed": 42,
+    "min_images": 10,
+    "val_size": 2,
+    "class_names": [
+      "Green jack",
+      "Almaco jack",
+      "Rainbow runner",
+      "Pilotfish",
+      "Silky shark"
+    ]
+  }
+}

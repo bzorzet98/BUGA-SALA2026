@@ -1,0 +1,47 @@
+{
+  "paths": {
+    "raw_root": "../../Datasets/fishes_bb_by_sam2/",
+    "images_dir": "../../Datasets/fishes_bb_by_sam2/images",
+    "labels_dir": "../../Datasets/fishes_bb_by_sam2/labels",
+    "dataset_root": "../../Datasets/fishes_bb_by_sam2/final_dataset",
+    "project_dir": "../runs"
+  },
+  "dataset": {
+    "image_extensions": [".jpg", ".jpeg", ".png", ".bmp", ".webp"],
+    "random_seed": 42,
+    "min_images": 10,
+    "val_size": 2,
+    "class_names": [
+      "Green jack",
+      "Almaco jack",
+      "Rainbow runner",
+      "Pilotfish",
+      "Silky shark"
+    ]
+  },
+  "model": {
+    "weights": "yolo26l.pt"
+  },
+  "train": {
+    "epochs": 100,
+    "imgsz": 960,
+    "batch": 12,
+    "device": 0,
+    "pretrained": true,
+    "run_name": "fish_yolo26l_finetune",
+    "cache": true,
+    "patience": 50,
+    "degrees": 3.0,
+    "translate": 0.03,
+    "scale": 0.1,
+    "fliplr": 0.5,
+    "mosaic": 0.1,
+    "mixup": 0.0,
+    "copy_paste": 0.0
+  },
+  "val": {
+    "split": "val",
+    "imgsz": 960,
+    "device": 0
+  }
+}
