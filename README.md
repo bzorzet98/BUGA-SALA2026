@@ -95,4 +95,23 @@ Training pipeline included:
 
 ---
 
+## 5. Fish Re-Identification & Persistence Module
+
+This module is designed for the individual characterization and temporal tracking of fish across video sequences. By automating the association of detections over time, this component serves as a **semi-automated labeling assistant for biologists**, significantly reducing the manual effort required to annotate long-term behavioral data or population counts.
+
+### Pipeline Architecture
+1. **Segmentation & Cropping:** Using **Segment Anything Model (SAM)** outputs, the system extracts precise image crops for every detected fish. This isolates individual specimens and removes environmental noise.
+2. **Feature Extraction:** Each crop is processed through a **ResNet18** (pre-trained on ImageNet) to generate high-dimensional **embeddings**. These vectors capture unique visual signatures—such as scale patterns and morphology—essential for re-identification.
+   
+   
+
+3. **Temporal Clustering:** We apply **DBSCAN** (Density-Based Spatial Clustering of Applications with Noise) to the collected embeddings. This allows the system to:
+    * **Determine Class Persistence:** Automatically group detections across different frames as the same individual.
+    * **Streamline Biologist Review:** Instead of labeling 1,000 individual frames, a biologist can verify a single "cluster" representing one fish throughout its entire appearance.
+    * **Handle Dynamic Populations:** Identify unique fish without needing a predefined count (unlike K-Means).
+    * **Filter Outliers:** Naturally classify inconsistent detections or false positives as noise.
+
+   
+
+**Tech Stack:** SAM (Meta AI), PyTorch (ResNet18), Scikit-learn (DBSCAN), OpenCV.
 
