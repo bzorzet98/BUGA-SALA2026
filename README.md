@@ -12,7 +12,7 @@ Below is a demonstration of the trained **YOLO26 fish detection model** running 
 
 ![Fish detection demo](02_YOLO_retraining/fish_pipeline/results/MaxNCountN/max_count_comparison_2.png)
 
-![video demo](https://drive.google.com/file/d/1zHzw2ELolFQOY4qbXLQV-zmljK4LuBQw/view?usp=sharing)
+[▶️ Watch the demo video](https://drive.google.com/file/d/1zHzw2ELolFQOY4qbXLQV-zmljK4LuBQw/view)
 ---
 
 # Project Overview
