@@ -1,0 +1,67 @@
+{
+  "video_path": "/home/jpbarrientos/code/BUGA-SALA2026/Datasets/videos/LGH020002.MP4",
+  "model_path": "/home/jpbarrientos/code/BUGA-SALA2026/runs/runs/fish_yolo26l_finetune6/weights/best.pt",
+  "output_dir": "/home/jpbarrientos/code/BUGA-SALA2026/02_YOLO_retraining/fish_pipeline/results/MaxNCountN",
+  "save_annotated_video": true,
+  "annotated_video_name": "LGH020002_detections_0.2_minute.mp4",
+
+  "process_every_n_frames": 1,
+  "max_frames": null,
+
+  "save_annotated_frames": true,
+  "save_frames_by_class": true,
+  "save_detection_txt": false,
+
+  "conf_threshold": 0.40,
+  "iou_threshold": 0.45,
+  "device": "cuda:0",
+
+  "frame_selection": {
+    "mode": "frame_list",
+    "start_minute": 0,
+    "duration_minutes": null,
+    "frame_list": [10717,10760,1938,1981]
+  },
+
+  "class_names": [
+    "Green jack",
+    "Almaco jack",
+    "Rainbow runner",
+    "Pilotfish",
+    "Silky shark"
+  ],
+
+  "video_segment": {
+    "start_minute": 0.4,
+    "duration_minutes": 0.66
+  },
+
+  "preprocess": {
+    "method": "clahe_bilateral"
+  },
+
+  "metrics": {
+    "enabled": true,
+    "labels_csv": "/home/jpbarrientos/code/BUGA-SALA2026/02_YOLO_retraining/fish_pipeline/results/1minute_segments/CumulativeMaxN.csv",
+    "video_filename_column": "Filename",
+    "time_column": "Time (mins)",
+    "gt_count_column": "Cumulative MaxN",
+    "species_column": "Species",
+    "target_video_name": "LGH020002.MP4",
+    "target_class_id": 0,
+    "target_class_name_in_csv": "Green jack",
+    "sub_video_duration_min": 11.783,
+    "positive_threshold": 1
+  },
+
+  "max_count_visualization": {
+  "enabled": true,
+  "target": {
+    "frame": 1938,
+    "expected_max_count": 174
+  },
+  "output_name": "max_count_comparison_2.png"
+}
+
+  
+}

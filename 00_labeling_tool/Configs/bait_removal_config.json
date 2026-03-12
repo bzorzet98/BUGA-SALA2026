@@ -1,0 +1,9 @@
+{
+  "labels_dir": "C:\\Users\\juanp\\Downloads\\TRAIN-20260311T120615Z-1-001\\TRAIN\\labels",
+  "output_dir": "C:\\Users\\juanp\\Downloads\\TRAIN-20260311T120615Z-1-001\\TRAIN\\labels",
+  "x_min": 0.72,
+  "x_max": 1.00,
+  "y_min": 0.40,
+  "y_max": 0.72,
+  "make_backup": true
+}

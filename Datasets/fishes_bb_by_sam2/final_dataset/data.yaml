@@ -1,0 +1,9 @@
+path: ../../Datasets/fishes_bb_by_sam2/final_dataset
+train: images/train
+val: images/val
+names:
+  0: Green jack
+  1: Almaco jack
+  2: Rainbow runner
+  3: Pilotfish
+  4: Silky shark
