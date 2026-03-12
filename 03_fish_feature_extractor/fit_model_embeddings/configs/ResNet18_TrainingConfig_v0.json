@@ -1,7 +1,7 @@
 {   
     "general_parameters": {
         "label": "ResNet18_TrainingConfig_v0",
-        "database_path":["dataset"],
+        "database_path":["Dataset"],
         "path_to_save_results": ["02_fish_object_feature_extractor","results", 
                                 "fit_model_embeddings", "ResNet18_TrainingConfig_v0"]
     },
@@ -14,7 +14,7 @@
     },
     "splitter_data":{
         "seed":8,
-        "ptrain":0.8
+        "ptrain":0.5
     },
     "model":{
         "class_name": "ResNetFishEmbeddings",
@@ -22,9 +22,9 @@
         "params": {
             "resnet_type":"ResNet18", 
             "pca_kwargs":{
-                        "n_components": 50,
-                        "whiten":true,
-                        "svd_solver":"auto"},
+                        "n_components": 0.8,
+                        "whiten":false,
+                        "svd_solver":"full"},
             "device":"cuda"
                 }
     }
