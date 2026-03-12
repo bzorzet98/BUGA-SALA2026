@@ -1,4 +1,55 @@
-*.jpg
-*.png
-*.MP4
-*.txt
+# Images
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.bmp
+**/*.tiff
+**/*.gif
+
+# CSV
+**/*.csv
+
+# Videos
+**/*.mp4
+
+# Text files
+**/*.txt
+
+# Images
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.bmp
+**/*.tiff
+**/*.gif
+
+# CSV
+**/*.csv
+
+# Videos
+**/*.mp4
+**/*.MP4
+
+# Text files
+**/*.txt
+
+# Python virtual environments
+**/venv/
+**/.venv/
+**/env/
+**/.env/
+**/yolo-venv/
+/02_YOLO_retraining/yolo-venv/
+
+
+# Python cache
+**/__pycache__/
+**/*.pyc
+
+# weights
+**/*.pt
+
+#runs
+**/runs/
+
+!02_YOLO_retraining/fish_pipeline/results/MaxNCountN/max_count_comparison_2.png
