@@ -10,8 +10,10 @@ This project was developed during the **SALA Hackathon** as part of the **BRUV F
 
 Below is a demonstration of the trained **YOLO26 fish detection model** running on BRUV footage.
 
+<h2>Demo</h2>
+
 <video width="900" controls>
-  <source src="02_YOLO_retraining/fish_pipeline/results/1minute_segments/LGH020002_detections_1_minute.mp4" type="video/mp4">
+  <source src="https://raw.githubusercontent.com/bzorzet98/BUGA-SALA2026/yolo-integration/02_YOLO_retraining/fish_pipeline/results/1minute_segments/LGH020002_detections_1_minute.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
